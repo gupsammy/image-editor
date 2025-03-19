@@ -100,6 +100,17 @@ For advanced users who want to modify the application:
 - API integration: `src/lib/api.ts` and `src/app/api/replicate/generate-image/route.ts`
 - Local storage: `src/lib/db.ts`
 
+## Optional Personal Models
+
+To use your own personal models, create a `.env.local` file with the following variables:
+
+```bash
+NEXT_PUBLIC_PERSONAL_MODEL_1="your_model_id_here"
+NEXT_PUBLIC_PERSONAL_MODEL_2="your_model_id_here"
+```
+
+These models are optional and the app will work perfectly without them.
+
 ## License
 
 [Your License Information]
@@ -108,3 +119,7 @@ For advanced users who want to modify the application:
 
 - This project uses Replicate's API for AI image models
 - Built with Next.js and Tailwind CSS
+
+```
+
+```
