@@ -19,6 +19,7 @@ export interface MaskData {
 export interface ModelConfig {
   id: string;
   name: string;
+  provider: "replicate" | "openai";
   type: "generation" | "editing";
   parameters: ModelParameter[];
 }
@@ -27,6 +28,9 @@ export interface ModelParameter {
   name: string;
   type: "text" | "number" | "select" | "range";
   label: string;
+  required?: boolean;
+  maxLength?: number;
+  helpText?: string;
   default?: any;
   options?: string[];
   min?: number;

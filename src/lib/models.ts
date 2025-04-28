@@ -4,6 +4,7 @@ export const GENERATION_MODELS: ModelConfig[] = [
   {
     id: "black-forest-labs/flux-schnell",
     name: "Flux Schnell",
+    provider: "replicate",
     type: "generation",
     parameters: [
       {
@@ -78,6 +79,7 @@ export const GENERATION_MODELS: ModelConfig[] = [
   {
     id: "black-forest-labs/flux-dev",
     name: "Flux Dev",
+    provider: "replicate",
     type: "generation",
     parameters: [
       {
@@ -161,6 +163,7 @@ export const GENERATION_MODELS: ModelConfig[] = [
   {
     id: "ideogram-ai/ideogram-v2",
     name: "Ideogram v2",
+    provider: "replicate",
     type: "generation",
     parameters: [
       {
@@ -343,6 +346,7 @@ export const GENERATION_MODELS: ModelConfig[] = [
   {
     id: "ideogram-ai/ideogram-v2-turbo",
     name: "Ideogram v2 Turbo",
+    provider: "replicate",
     type: "generation",
     parameters: [
       {
@@ -522,12 +526,150 @@ export const GENERATION_MODELS: ModelConfig[] = [
       },
     ],
   },
+  {
+    id: "dall-e-2",
+    name: "DALL·E 2",
+    provider: "openai",
+    type: "generation",
+    parameters: [
+      {
+        name: "prompt",
+        type: "text",
+        label: "Prompt",
+        maxLength: 1000,
+        required: true,
+      },
+      {
+        name: "n",
+        type: "range",
+        label: "Number of Images",
+        min: 1,
+        max: 10,
+        step: 1,
+        default: 1,
+      },
+      {
+        name: "size",
+        type: "select",
+        label: "Size",
+        options: ["256x256", "512x512", "1024x1024"],
+        default: "1024x1024",
+      },
+    ],
+  },
+  {
+    id: "dall-e-3",
+    name: "DALL·E 3",
+    provider: "openai",
+    type: "generation",
+    parameters: [
+      {
+        name: "prompt",
+        type: "text",
+        label: "Prompt",
+        maxLength: 4000,
+        required: true,
+      },
+      {
+        name: "size",
+        type: "select",
+        label: "Size",
+        options: ["1024x1024", "1792x1024", "1024x1792"],
+        default: "1024x1024",
+      },
+      {
+        name: "quality",
+        type: "select",
+        label: "Quality",
+        options: ["standard", "hd"],
+        default: "standard",
+      },
+      {
+        name: "style",
+        type: "select",
+        label: "Style",
+        options: ["vivid", "natural"],
+        default: "vivid",
+      },
+    ],
+  },
+  {
+    id: "gpt-image-1",
+    name: "GPT Image",
+    provider: "openai",
+    type: "generation",
+    parameters: [
+      {
+        name: "prompt",
+        type: "text",
+        label: "Prompt",
+        maxLength: 32000,
+        required: true,
+      },
+      {
+        name: "n",
+        type: "range",
+        label: "Number of Images",
+        min: 1,
+        max: 10,
+        step: 1,
+        default: 1,
+      },
+      {
+        name: "size",
+        type: "select",
+        label: "Size",
+        options: ["1024x1024", "1536x1024", "1024x1536", "auto"],
+        default: "auto",
+      },
+      {
+        name: "quality",
+        type: "select",
+        label: "Quality",
+        options: ["low", "medium", "high", "auto"],
+        default: "auto",
+      },
+      {
+        name: "background",
+        type: "select",
+        label: "Background",
+        options: ["transparent", "opaque", "auto"],
+        default: "auto",
+        helpText: "Requires PNG or WebP format",
+      },
+      {
+        name: "output_format",
+        type: "select",
+        label: "Output Format",
+        options: ["png", "jpeg", "webp"],
+        default: "png",
+      },
+      {
+        name: "output_compression",
+        type: "range",
+        label: "Compression (JPEG/WebP)",
+        min: 0,
+        max: 100,
+        step: 1,
+        default: 100,
+        helpText: "Only applies if format is JPEG or WebP",
+      },
+      {
+        name: "moderation",
+        type: "select",
+        label: "Moderation",
+        options: ["low", "auto"],
+        default: "auto",
+      },
+    ],
+  },
 ];
 
 export const EDITING_MODELS: ModelConfig[] = [
   {
     id: "black-forest-labs/flux-fill-pro",
     name: "Flux Fill Pro",
+    provider: "replicate",
     type: "editing",
     parameters: [
       {
@@ -584,6 +726,7 @@ export const EDITING_MODELS: ModelConfig[] = [
   {
     id: "ideogram-ai/ideogram-v2",
     name: "Ideogram v2 (Edit)",
+    provider: "replicate",
     type: "editing",
     parameters: [
       {
@@ -660,6 +803,7 @@ export const EDITING_MODELS: ModelConfig[] = [
   {
     id: "ideogram-ai/ideogram-v2-turbo",
     name: "Ideogram v2 Turbo (Edit)",
+    provider: "replicate",
     type: "editing",
     parameters: [
       {
@@ -742,6 +886,7 @@ export const MODELS: ModelConfig[] = [
           id: process.env.NEXT_PUBLIC_PERSONAL_MODEL_1,
           name:
             process.env.NEXT_PUBLIC_PERSONAL_MODEL_1_NAME ?? "Personal Model 1",
+          provider: "replicate" as const,
           type: "generation" as const,
           parameters: [
             {
@@ -892,6 +1037,7 @@ export const MODELS: ModelConfig[] = [
           name: `${
             process.env.NEXT_PUBLIC_PERSONAL_MODEL_1_NAME ?? "Personal Model 1"
           } (Edit)`,
+          provider: "replicate" as const,
           type: "editing" as const,
           parameters: [
             {
@@ -1007,6 +1153,7 @@ export const MODELS: ModelConfig[] = [
           id: process.env.NEXT_PUBLIC_PERSONAL_MODEL_2,
           name:
             process.env.NEXT_PUBLIC_PERSONAL_MODEL_2_NAME ?? "Personal Model 2",
+          provider: "replicate" as const,
           type: "generation" as const,
           parameters: [
             {
@@ -1157,6 +1304,7 @@ export const MODELS: ModelConfig[] = [
           name: `${
             process.env.NEXT_PUBLIC_PERSONAL_MODEL_2_NAME ?? "Personal Model 2"
           } (Edit)`,
+          provider: "replicate" as const,
           type: "editing" as const,
           parameters: [
             {

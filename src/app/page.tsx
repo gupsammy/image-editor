@@ -13,7 +13,7 @@ import ActionButtons from "@/components/ActionButtons";
 import ModelSelector from "@/components/ModelSelector";
 import DynamicForm from "@/components/DynamicForm";
 import { MODELS } from "@/lib/models";
-import { generateImage } from "@/lib/api";
+import { generateImage, generateOpenAIImage } from "@/lib/api";
 import { imageDb, StoredImage } from "@/lib/db";
 
 export default function ImageEditor() {
@@ -97,10 +97,21 @@ export default function ImageEditor() {
         }),
       };
 
-      const result = await generateImage({
-        modelId: state.selectedModel.id,
-        parameters,
-      });
+      // --- Choose API based on provider ---
+      let result;
+      if (state.selectedModel.provider === "openai") {
+        result = await generateOpenAIImage({
+          modelId: state.selectedModel.id,
+          parameters,
+        });
+      } else {
+        // Default to replicate (or handle other providers if added later)
+        result = await generateImage({
+          modelId: state.selectedModel.id,
+          parameters,
+        });
+      }
+      // --- End API choice ---
 
       // Create new image records
       const newImages: StoredImage[] = await Promise.all(
@@ -158,11 +169,13 @@ export default function ImageEditor() {
           ? firstGenerationModel || null
           : prev.selectedModel,
       }));
-    } catch (error) {
+    } catch (error: any) {
+      // Updated error handling to show specific message from API
+      console.error("Error during generation:", error);
       setState((prev) => ({
         ...prev,
         isLoading: false,
-        error: "Failed to generate image",
+        error: error.message || "Failed to generate image",
       }));
     }
   };

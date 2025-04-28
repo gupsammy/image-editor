@@ -46,7 +46,6 @@ class ImageDatabase {
 
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
-        this.exportToLocalStorage();
         resolve();
       };
     });
