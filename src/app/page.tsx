@@ -12,7 +12,7 @@ import HistoryPanel from "@/components/HistoryPanel";
 import ActionButtons from "@/components/ActionButtons";
 import ModelSelector from "@/components/ModelSelector";
 import DynamicForm from "@/components/DynamicForm";
-import { GENERATION_MODELS, EDITING_MODELS } from "@/lib/models";
+import { MODELS } from "@/lib/models";
 import { generateImage } from "@/lib/api";
 import { imageDb, StoredImage } from "@/lib/db";
 
@@ -145,6 +145,8 @@ export default function ImageEditor() {
         })
       );
 
+      const firstGenerationModel = MODELS.find((m) => m.type === "generation");
+
       setState((prev) => ({
         ...prev,
         currentImage: newImages[0],
@@ -153,7 +155,7 @@ export default function ImageEditor() {
         isLoading: false,
         editMask: null,
         selectedModel: state.editMask
-          ? GENERATION_MODELS[0]
+          ? firstGenerationModel || null
           : prev.selectedModel,
       }));
     } catch (error) {
@@ -166,10 +168,11 @@ export default function ImageEditor() {
   };
 
   const handleCancelEdit = () => {
+    const firstGenerationModel = MODELS.find((m) => m.type === "generation");
     setState((prev) => ({
       ...prev,
       editMask: null,
-      selectedModel: GENERATION_MODELS[0],
+      selectedModel: firstGenerationModel || null,
     }));
   };
 
@@ -207,7 +210,9 @@ export default function ImageEditor() {
               <ActionButtons state={state} setState={setState} uploadOnly />
 
               <ModelSelector
-                models={state.editMask ? EDITING_MODELS : GENERATION_MODELS}
+                models={MODELS.filter(
+                  (m) => m.type === (state.editMask ? "editing" : "generation")
+                )}
                 selectedModel={state.selectedModel}
                 onSelect={handleModelSelect}
               />
